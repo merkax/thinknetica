@@ -4,8 +4,10 @@ name = gets.strip.capitalize
 puts "Какой Ваш рост?"
 height = gets.chomp.to_i
 
-if height - 110 <= 0
+ideal_weight = height - 110
+
+if ideal_weight <= 0
   puts "#{name}, Ваш вес уже оптимальный"
 else 
-  puts "#{name}, Ваш идеальный вес состовляет: #{height - 110}"
+  puts "#{name}, Ваш идеальный вес составляет: #{ideal_weight}"
 end
