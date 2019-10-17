@@ -8,3 +8,5 @@ while i <= 100
 end
 
 p array
+
+#(5..100).step(5).to_a
