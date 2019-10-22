@@ -3,4 +3,3 @@ class PassengerTrain < Train
     super(number, 'passenger')
   end
 end
-

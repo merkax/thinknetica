@@ -72,6 +72,3 @@ class Train
     @route.stations[@current_index - 1] unless @current_index == 0
   end
 end
-
-
-
