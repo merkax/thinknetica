@@ -94,8 +94,7 @@ class Main
     type = gets.strip
     if type == 'passenger'
       trains << PassengerTrain.new(number)
-    end
-    if type == 'cargo'
+    elsif type == 'cargo'
       trains << CargoTrain.new(number)
     end
     show(trains)
@@ -153,10 +152,9 @@ class Main
     train = select_from_list(trains)
 
     if train.type == 'passenger'
-    wagon = PassengerWagon.new
-    train.add_wagon(wagon)
-    end
-    if train.type == 'cargo'
+      wagon = PassengerWagon.new
+      train.add_wagon(wagon)
+    elsif train.type == 'cargo'
       wagon = CargoWagon.new
       train.add_wagon(wagon)
     end
