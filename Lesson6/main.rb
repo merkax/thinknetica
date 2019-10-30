@@ -92,20 +92,15 @@ class Main
   end
 
   def create_train
-    begin # почему, если закомментирую begin(так как def должен замещать его),
-          #руби ругается на синтаксическую ошибку? или руби считает end на 105 строке окончанием метода create_train?
-      puts 'Какой будет номер у поезда?'
-      number = gets.strip
-      puts 'Какой будет тип поезда(passenger или cargo)?'
-      type = gets.strip
-      trains << Train.new(number, type)
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}. Попробуйте еще раз."
-      retry
-    end 
-    ensure # если закомментировать begin и end, а здесь добавить ensure, то все работает? 
-            # Без ensure не выводиться продолжение метода
+    puts 'Какой будет номер у поезда?'
+    number = gets.strip
+    puts 'Какой будет тип поезда(passenger или cargo)?'
+    type = gets.strip
+    trains << Train.new(number, type)
     puts "Создан поезд:#{trains.last}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}. Попробуйте еще раз."
+    retry
   end
 
   def create_route
