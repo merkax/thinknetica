@@ -9,7 +9,6 @@ require_relative 'passenger_train'
 require_relative 'wagon'
 require_relative 'passenger_wagon'
 require_relative 'cargo_wagon'
-# require_relative 'seed'
 
 class Main
 
@@ -17,6 +16,7 @@ class Main
     @stations = []
     @trains = []
     @routes = []
+    @wagons = []
   end 
 
   def run
@@ -48,14 +48,19 @@ class Main
       when 10
         show(stations)
       when 11
-        show_trains_on_stations
+        # show_trains_on_stations
+        train_on_station
+      when 12
+        trains_wagon
+      when 13
+        change_space
       end
     end
   end
 
   private
 
-  attr_reader :stations, :routes, :trains
+  attr_reader :stations, :routes, :trains, :wagons
 
   def start_menu
     puts '=' * 30
@@ -71,6 +76,8 @@ class Main
     puts 'Введите 9, если вы хотите переместить поезд на предыдущую станцию'
     puts 'Введите 10, если вы хотите посмотреть список станций.'
     puts 'Введите 11, если вы хотите посмотреть список поездов на станции'
+    puts 'Введите 12, если вы хотите посмотреть список вагонов у поезда'
+    puts 'Введите 13, если вы хотите изменить объем вагонов'
   end
 
   def show(list)
@@ -162,10 +169,16 @@ class Main
     train = select_from_list(trains)
 
     if train.type == 'passenger'
-      wagon = PassengerWagon.new
+      puts "Укажите количество мест в вагоне"
+      seats = gets.chomp.to_i
+      wagon = PassengerWagon.new(seats)
+      wagons << wagon
       train.add_wagon(wagon)
     elsif train.type == 'cargo'
-      wagon = CargoWagon.new
+      puts "Укажите общий объем вагона"
+      space = gets.chomp.to_i
+      wagon = CargoWagon.new(space)
+      wagons << wagon
       train.add_wagon(wagon)
     end
   end
@@ -186,10 +199,9 @@ class Main
   end
 
   def move_the_train_to_back
-    puts 'Выберете поезд у который вы хотите переместить на предыдущую станцию'
+    puts 'Выберете поезд, который вы хотите переместить на предыдущую станцию'
     show(trains)
     train = select_from_list(trains)
-    #puts "Следующая станция: #{train.current_station.name}" 
     train.back_to_the_station
   end
 
@@ -198,6 +210,36 @@ class Main
     show(stations)
     station = select_from_list(stations)
     station.show_train
+  end
+
+  def trains_wagon
+    puts 'Выберете поезд у которого вы хотите посмотреть вагоны'
+    show(trains)
+    train = select_from_list(trains)
+    train.each_wagons do |wagon| 
+      puts "Номер вагона: #{wagon.number}, тип вагона: #{wagon.type}"
+      puts "кол-во свободных мест: #{wagon.free_space}, количество занятых мест:#{wagon.reserved_space}"
+    end
+  end
+
+  def train_on_station
+    puts 'Выберете станцию из списка'
+    show(stations)
+    station = select_from_list(stations)
+    station.each_train do |train|
+      puts "Номер поезда: #{train.number}, тип поезда: #{train.type}"
+      puts "Количество вагонов: #{train.wagons.size}"
+    end
+  end
+
+  def change_space
+    puts 'Выберете вагоны'
+    show(wagons)
+    wagon = select_from_list(wagons)
+    puts "Нажмите Enter, чтоюы занять одно место в поезде" if wagon.type == 'passenger'
+    puts "Введите сколько вы хотите занять объема в поезде" if wagon.type == 'cargo'
+    space = gets.chomp.to_i
+    wagon.reserve_space(space)
   end
 end
 

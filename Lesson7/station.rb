@@ -1,6 +1,5 @@
 require_relative 'instance_counter'
 require_relative 'validate'
-
 class Station
   include InstanceCounter
   include Validate
@@ -15,6 +14,10 @@ class Station
     @@all_stations << self
     validate!
     register_instance
+  end
+
+  def each_train(&block)
+    trains.each { |train| yield(train) }
   end
 
   def self.all

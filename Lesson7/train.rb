@@ -27,6 +27,10 @@ class Train
     register_instance
   end
 
+  def each_wagons(&block)
+    wagons.each { |wagon| yield(wagon) }
+  end
+
   def self.find(number)
     @@trains[number]
   end
