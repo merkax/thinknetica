@@ -2,7 +2,7 @@ module Validate
   def validate?
     validate!
     true
-    rescue
-      false
-  end  
+  rescue
+    false
+  end
 end
