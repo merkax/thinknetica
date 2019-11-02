@@ -6,7 +6,7 @@ class PassengerWagon < Wagon
     super('passenger', space)
   end
 
-  def reserve_space(quantity)
+  def reserve_space
     super(1)
   end
 end

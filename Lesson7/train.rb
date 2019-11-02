@@ -27,7 +27,7 @@ class Train
     register_instance
   end
 
-  def each_wagons(&block)
+  def each_wagons
     wagons.each { |wagon| yield(wagon) }
   end
 

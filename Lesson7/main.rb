@@ -236,7 +236,7 @@ class Main
     puts 'Выберете вагоны'
     show(wagons)
     wagon = select_from_list(wagons)
-    puts "Нажмите Enter, чтоюы занять одно место в поезде" if wagon.type == 'passenger'
+    puts "Нажмите Enter, чтобы занять одно место в поезде" if wagon.type == 'passenger'
     puts "Введите сколько вы хотите занять объема в поезде" if wagon.type == 'cargo'
     space = gets.chomp.to_i
     wagon.reserve_space(space)
