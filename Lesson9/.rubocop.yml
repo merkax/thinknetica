@@ -1,0 +1,25 @@
+Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/ClassLength:
+  Max: 215
+
+Style/ClassVars:
+  Exclude:
+  - 'train.rb'
+  - 'station.rb'
+  - 'wagon.rb'
+
+AllCops:
+  Exclude:
+   - 'test.rb'
+
