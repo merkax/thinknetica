@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 require_relative 'manufacturer'
-require_relative 'validate'
 
 class Wagon
   include Manufacturer
-  include Validate
 
   attr_reader :type, :space, :reserved_space, :number
 

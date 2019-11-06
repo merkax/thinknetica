@@ -1,12 +1,20 @@
 # frozen_string_literal: true
 
 require_relative 'instance_counter'
-require_relative 'validate'
+require_relative 'validation'
+require_relative 'accessors'
+
 class Station
   include InstanceCounter
-  include Validate
+  include Validation
+  include Acсessors
 
   attr_reader :trains, :name
+  attr_accessor_with_history :name
+  strong_attr_accessor :name, String
+
+  validate :name, :presence
+  validate :name, :type, String
 
   @@all_stations = []
 
@@ -42,10 +50,10 @@ class Station
     trains.select { |train| train.type == type }
   end
 
-  protected
+  # protected
 
-  def validate!
-    raise 'Name not object string' unless name.is_a? String
-    raise 'Name can`t be nil' if name.empty?
-  end
+  # def validate!
+  #   raise 'Name not object string' unless name.is_a? String
+  #   raise 'Name can`t be nil' if name.empty?
+  # end
 end

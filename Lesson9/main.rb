@@ -2,7 +2,6 @@
 
 require_relative 'manufacturer'
 require_relative 'instance_counter'
-require_relative 'validate'
 require_relative 'route'
 require_relative 'station'
 require_relative 'train'
@@ -11,6 +10,8 @@ require_relative 'passenger_train'
 require_relative 'wagon'
 require_relative 'passenger_wagon'
 require_relative 'cargo_wagon'
+require_relative 'validation'
+require_relative 'accessors'
 
 class Main
   def initialize
@@ -87,6 +88,9 @@ class Main
     new_station = Station.new(user_choice)
     stations << new_station
     show(stations)
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}. Попробуйте еще раз."
+    retry
   end
 
   def create_train

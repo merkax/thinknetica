@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require_relative 'instance_counter'
-require_relative 'validate'
+require_relative 'validation'
+require_relative 'accessors'
 
 class Route
   include InstanceCounter
-  include Validate
+  include Validation
+  include Acсessors
 
   attr_reader :stations
 

@@ -1,23 +1,28 @@
 # frozen_string_literal: true
 
+require_relative 'validation'
+require_relative 'accessors'
 require_relative 'wagon'
 require_relative 'cargo_wagon'
 require_relative 'passenger_wagon'
 require_relative 'manufacturer'
 require_relative 'instance_counter'
-require_relative 'validate'
 
 class Train
   include Manufacturer
   include InstanceCounter
-  include Validate
+  include Validation
+  include Acсessors
 
   NUMBER_FORMAT = /^([a-zа-я0-9]{3})([-— − –])?([a-zа-я0-9]{2})$/i.freeze
+  @@trains = {}
 
   attr_accessor :speed
   attr_reader   :type, :number, :wagons
+  attr_accessor_with_history :number
 
-  @@trains = {}
+  # validate :number, :presence
+  validate :number, :format, NUMBER_FORMAT
 
   def initialize(number, type)
     @number = number
@@ -83,11 +88,10 @@ class Train
     @route.stations[@current_index - 1] unless @current_index.zero?
   end
 
-  # protected
+  protected
 
-  # def validate!
-  #   raise 'Number has invalid format' if number !~ NUMBER_FORMAT
-  #   raise 'Type nil' if type.nil?
-  #   raise 'Wrong type' unless type == 'cargo' || type == 'passenger'
-  # end
+  def validate!
+    super
+    raise 'Wrong type train' unless type == 'cargo' || type == 'passenger'
+  end
 end
